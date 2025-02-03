@@ -13,6 +13,16 @@ module "non-pci-gcs" {
     create_encryption_key = true
     prevent_destroy       = false
   }
+  iam_members = [
+    {
+      role   = "roles/storage.objectUser"
+      member = "serviceAccount:b-32-988@pr-hvpc-1056d88565a4.iam.gserviceaccount.com"
+    },
+    {
+      role   = "roles/storage.objectCreator"
+      member = "serviceAccount:a-833-223@pr-hvpc-1056d88565a4.iam.gserviceaccount.com"
+    }
+  ]
 }
 
 module "non-pci-gcs_cmek" {

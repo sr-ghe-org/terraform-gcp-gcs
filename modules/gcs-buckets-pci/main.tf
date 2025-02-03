@@ -35,6 +35,7 @@ module "gcs_pci_buckets" {
     default_kms_key_name = length(var.kms_key_names) > 0 ? var.kms_key_names[each.key] : null
   }
   internal_encryption_config = var.internal_encryption_config
+  iam_members                = var.iam_members
   depends_on                 = [google_kms_crypto_key_iam_binding.decrypters, google_kms_crypto_key_iam_binding.encrypters]
 }
 

@@ -11,8 +11,9 @@ module "non_pci_gcs_buckets" {
   storage_class      = var.storage_class
   autoclass          = var.autoclass
   environment        = var.environment
+  iam_members        = var.iam_members
   retention_policy = {
-    is_locked        = false // ??
+    is_locked        = false
     retention_period = 365 * 7
   }
   lifecycle_rules = [
@@ -21,11 +22,8 @@ module "non_pci_gcs_buckets" {
       condition = { age = 365 * 7 }
     }
   ]
-  force_destroy            = var.force_destroy
-  public_access_prevention = "enforced"
-  # soft_delete_policy = {
-  #   retention_duration_seconds = 0
-  # }
+  force_destroy              = var.force_destroy
+  public_access_prevention   = "enforced"
   soft_delete_policy         = var.soft_delete_policy
   kms_key_names              = var.kms_key_names
   internal_encryption_config = var.internal_encryption_config
@@ -44,8 +42,9 @@ module "pci_gcs_buckets" {
   storage_class      = var.storage_class
   autoclass          = var.autoclass
   environment        = var.environment
+  iam_members        = var.iam_members
   retention_policy = {
-    is_locked        = false // ??
+    is_locked        = false
     retention_period = 365 * 7
   }
   lifecycle_rules = [
@@ -54,11 +53,8 @@ module "pci_gcs_buckets" {
       condition = { age = 365 * 7 }
     }
   ]
-  force_destroy            = var.force_destroy
-  public_access_prevention = "enforced"
-  # soft_delete_policy = {
-  #   retention_duration_seconds = 0
-  # }
+  force_destroy              = var.force_destroy
+  public_access_prevention   = "enforced"
   soft_delete_policy         = var.soft_delete_policy
   kms_key_names              = var.kms_key_names
   internal_encryption_config = var.internal_encryption_config

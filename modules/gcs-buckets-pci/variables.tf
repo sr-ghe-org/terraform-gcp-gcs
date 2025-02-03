@@ -17,7 +17,10 @@ variable "bucket_name_prefix" {
 variable "regions" {
   type        = list(string)
   description = "List of regions for Non-PCI buckets"
-  default     = ["northamerica-northeast1", "northamerica-northeast2"] # Provide your list here
+  validation {
+    condition     = alltrue([for r in var.regions : r == "northamerica-northeast1" || r == "northamerica-northeast2" || r == "us-east4"])
+    error_message = "The regions list can only contain 'northamerica-northeast1', 'northamerica-northeast2', and 'us-east4'."
+  }
 }
 
 variable "environment" {
@@ -27,6 +30,15 @@ variable "environment" {
     condition     = contains(["prod", "non-prod"], lower(var.environment))
     error_message = "Bucket type must be 'prod' or 'non-prod' (case-insensitive)."
   }
+}
+
+variable "iam_members" {
+  description = "The list of IAM members to grant permissions on the bucket."
+  type = list(object({
+    role   = string
+    member = string
+  }))
+  default = []
 }
 
 variable "versioning" {
