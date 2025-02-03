@@ -44,8 +44,7 @@ This module simplifies the creation and management of GCS buckets, distinguishin
   project_number  = null
   regions  = [
   "northamerica-northeast1",
-  "northamerica-northeast2",
-  "us-east4"
+  "northamerica-northeast2"
 ]
   retention_policy  = null
   soft_delete_policy  = {}
@@ -75,7 +74,7 @@ This module simplifies the creation and management of GCS buckets, distinguishin
 | <a name="input_lifecycle_rules"></a> [lifecycle\_rules](#input\_lifecycle\_rules) | The bucket's Lifecycle Rules configuration. | <pre>list(object({<br>    # Object with keys:<br>    # - type - The type of the action of this Lifecycle Rule. Supported values: Delete and SetStorageClass.<br>    # - storage_class - (Required if action type is SetStorageClass) The target Storage Class of objects affected by this Lifecycle Rule.<br>    action = any<br><br>    # Object with keys:<br>    # - age - (Optional) Minimum age of an object in days to satisfy this condition.<br>    # - created_before - (Optional) Creation date of an object in RFC 3339 (e.g. 2017-06-13) to satisfy this condition.<br>    # - with_state - (Optional) Match to live and/or archived objects. Supported values include: "LIVE", "ARCHIVED", "ANY".<br>    # - matches_storage_class - (Optional) Storage Class of objects to satisfy this condition. Supported values include: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, STANDARD, DURABLE_REDUCED_AVAILABILITY.<br>    # - matches_prefix - (Optional) One or more matching name prefixes to satisfy this condition.<br>    # - matches_suffix - (Optional) One or more matching name suffixes to satisfy this condition<br>    # - num_newer_versions - (Optional) Relevant only for versioned objects. The number of newer versions of an object to satisfy this condition.<br>    condition = any<br>  }))</pre> | `[]` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID where GCS bucket will be created | `string` | n/a | yes |
 | <a name="input_project_number"></a> [project\_number](#input\_project\_number) | The GCP project number where GCS Service account exists | `string` | `null` | no |
-| <a name="input_regions"></a> [regions](#input\_regions) | List of regions for Non-PCI buckets | `list(string)` | <pre>[<br>  "northamerica-northeast1",<br>  "northamerica-northeast2",<br>  "us-east4"<br>]</pre> | no |
+| <a name="input_regions"></a> [regions](#input\_regions) | List of regions for Non-PCI buckets | `list(string)` | <pre>[<br>  "northamerica-northeast1",<br>  "northamerica-northeast2"<br>]</pre> | no |
 | <a name="input_retention_policy"></a> [retention\_policy](#input\_retention\_policy) | Configuration of the bucket's data retention policy for how long objects in the bucket should be retained. | <pre>object({<br>    is_locked        = bool<br>    retention_period = number<br>  })</pre> | `null` | no |
 | <a name="input_soft_delete_policy"></a> [soft\_delete\_policy](#input\_soft\_delete\_policy) | Soft delete policies to apply. Format is the same as described in provider documentation https://www.terraform.io/docs/providers/google/r/storage_bucket.html#nested_soft_delete_policy | <pre>object({<br>    retention_duration_seconds = optional(number)<br>  })</pre> | `{}` | no |
 | <a name="input_storage_class"></a> [storage\_class](#input\_storage\_class) | The Storage Class of the new bucket. | `string` | `null` | no |

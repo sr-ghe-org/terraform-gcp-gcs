@@ -17,7 +17,7 @@ variable "bucket_name_prefix" {
 variable "regions" {
   type        = list(string)
   description = "List of regions for Non-PCI buckets"
-  default     = ["northamerica-northeast1", "northamerica-northeast2", "us-east4"] # Provide your list here
+  default     = ["northamerica-northeast1", "northamerica-northeast2"] # Provide your list here
 }
 
 variable "environment" {
