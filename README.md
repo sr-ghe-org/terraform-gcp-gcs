@@ -17,7 +17,6 @@ This Terraform module creates Google Cloud Storage (GCS) buckets, categorized as
 
 This module simplifies the creation and management of GCS buckets, distinguishing between PCI and Non-PCI compliant buckets.  It utilizes submodules for managing each type of bucket, allowing for specific configurations.  It aims to promote security best practices, including CMEK encryption, data retention policies, and restricted access in production (though the access restriction logic needs to be implemented in the submodules).
 
-
 ## Example Input
 
 ```terraform
@@ -82,7 +81,11 @@ This module simplifies the creation and management of GCS buckets, distinguishin
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_gcs_bucket_names"></a> [gcs\_bucket\_names](#output\_gcs\_bucket\_names) | List of created GCS bucket names. |
+| <a name="output_gcs_bucket_urls"></a> [gcs\_bucket\_urls](#output\_gcs\_bucket\_urls) | List of created GCS bucket URLs. |
+| <a name="output_regions"></a> [regions](#output\_regions) | List of regions where the GCS buckets are created. |
 
 ## Modules
 
