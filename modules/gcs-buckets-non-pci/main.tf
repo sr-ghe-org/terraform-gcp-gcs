@@ -41,17 +41,17 @@ module "gcs_non_pci_buckets" {
   depends_on                 = [google_kms_crypto_key_iam_binding.decrypters, google_kms_crypto_key_iam_binding.encrypters]
 }
 
-resource "google_storage_bucket_iam_binding" "bucket_iam_prod" {
-  for_each = {
-    for region in var.regions :
-    "${var.bucket_name_prefix}-non-pci-${region}" => region
-    if var.environment == "prod"
-  }
-  bucket     = each.key
-  role       = "roles/storage.objectViewer"
-  members    = [] # Replace with a dummy user in your organization
-  depends_on = [module.gcs_non_pci_buckets]
-}
+# resource "google_storage_bucket_iam_binding" "bucket_iam_prod" {
+#   for_each = {
+#     for region in var.regions :
+#     "${var.bucket_name_prefix}-non-pci-${region}" => region
+#     if var.environment == "prod"
+#   }
+#   bucket     = each.key
+#   role       = "roles/storage.objectViewer"
+#   members    = [] # Replace with a dummy user in your organization
+#   depends_on = [module.gcs_non_pci_buckets]
+# }
 
 # Enable audit logging for the project
 resource "google_project_iam_audit_config" "project_audit_config" {
