@@ -16,7 +16,7 @@ resource "google_kms_crypto_key_iam_binding" "encrypters" {
   role          = "roles/cloudkms.cryptoKeyEncrypter"
 }
 
-module "gcs_buckets" {
+module "gcs_non_pci_buckets" {
   for_each                 = toset(var.regions)
   source                   = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
   version                  = "9.0"
@@ -28,6 +28,7 @@ module "gcs_buckets" {
   labels                   = merge(var.labels, { bucket_type = "non-pci", region = each.key })
   storage_class            = var.storage_class # By default storage Class of the new bucket set to "STANDARD"
   autoclass                = var.autoclass     # By default, autoclass is set to false
+  lifecycle_rules          = var.lifecycle_rules
   retention_policy         = var.retention_policy
   force_destroy            = var.force_destroy
   public_access_prevention = var.public_access_prevention # Prevent public access is "enforced" by default
@@ -48,7 +49,7 @@ resource "google_storage_bucket_iam_binding" "bucket_iam_prod" {
   bucket     = each.key
   role       = "roles/storage.objectViewer"
   members    = [] # Replace with a dummy user in your organization
-  depends_on = [module.gcs_buckets]
+  depends_on = [module.gcs_non_pci_buckets]
 }
 
 # Enable audit logging for the project
