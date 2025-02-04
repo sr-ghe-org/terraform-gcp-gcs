@@ -29,7 +29,7 @@ module "non_pci_gcs_buckets" {
   labels                     = var.labels
   storage_class              = var.storage_class
   autoclass                  = var.autoclass
-  environment                = var.environment
+  # environment                = var.environment
   iam_members                = var.iam_members
   retention_policy           = var.retention_policy
   lifecycle_rules            = var.lifecycle_rules
@@ -54,7 +54,7 @@ module "pci_gcs_buckets" {
   labels                     = var.labels
   storage_class              = var.storage_class
   autoclass                  = var.autoclass
-  environment                = var.environment
+  # environment                = var.environment
   iam_members                = var.iam_members
   force_destroy              = var.force_destroy
   public_access_prevention   = "enforced"

@@ -39,14 +39,14 @@ variable "regions" {
   }
 }
 
-variable "environment" {
-  type        = string
-  description = "Environment for the GCS bucket"
-  validation {
-    condition     = contains(["prod", "non-prod"], lower(var.environment))
-    error_message = "Bucket type must be 'prod' or 'non-prod' (case-insensitive)."
-  }
-}
+# variable "environment" {
+#   type        = string
+#   description = "Environment for the GCS bucket"
+#   validation {
+#     condition     = contains(["prod", "non-prod"], lower(var.environment))
+#     error_message = "Bucket type must be 'prod' or 'non-prod' (case-insensitive)."
+#   }
+# }
 
 variable "iam_members" {
   description = "The list of IAM members to grant permissions on the bucket."
