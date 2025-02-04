@@ -1,18 +1,26 @@
-# ---------------------------------------------------------------------------------------
-# Example 1 : Non-PCI GCS Bucket with internal encryption (CMEK handled by module)
-# ---------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------
+# Example 1 : Non-PCI GCS Bucket with internal encryption (CMEK handled by module) and lifecycle rules
+# -------------------------------------------------------------------------------------------------------
 
-module "non-pci-gcs" {
-  source             = "../terraform-gcp-gcs"
-  bucket_name_prefix = "gcs-non-pci-321"
+module "non-pci-gcs-lifecycle" {
+  source             = "../terraform-gcp-gcs-gitvcs"
+  bucket_name_prefix = "gcs-non-pci-lifecycle"
   project_id         = "pr-hvpc-1056d88565a4"
   regions            = ["northamerica-northeast1", "northamerica-northeast2"]
   environment        = "prod"
   versioning         = true
-  bucket_type        = "non-pci"
-  internal_encryption_config = {
-    create_encryption_key = true
-    prevent_destroy       = false
+  storage_class      = "NEARLINE"
+  project_number     = "828184145025"
+  soft_delete_policy = {
+    retention_duration_seconds = 900000
+  }
+  labels = {
+    "env" = "prod"
+  }
+  bucket_type = "non-pci"
+  kms_key_names = {
+    "northamerica-northeast1" = "projects/pr-hvpc-1056d88565a4/locations/northamerica-northeast1/keyRings/pci-ring/cryptoKeys/pci-key-mon"
+    "northamerica-northeast2" = "projects/pr-hvpc-1056d88565a4/locations/northamerica-northeast2/keyRings/pci-ring-tor/cryptoKeys/pci-key-tor"
   }
   iam_members = [
     {
@@ -22,6 +30,23 @@ module "non-pci-gcs" {
     {
       role   = "roles/storage.objectCreator"
       member = "serviceAccount:a-833-223@pr-hvpc-1056d88565a4.iam.gserviceaccount.com"
+    }
+  ]
+  retention_policy = {
+    is_locked        = false
+    retention_period = 220752000
+  }
+  lifecycle_rules = [
+    {
+      action = {
+        type          = "SetStorageClass"
+        storage_class = "ARCHIVE"
+      }
+      condition = {
+        age              = 365 * 7
+        send_age_if_zero = true
+        with_state       = "LIVE"
+      }
     }
   ]
 }
