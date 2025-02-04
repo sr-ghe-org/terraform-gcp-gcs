@@ -14,7 +14,7 @@ module "non_pci_gcs_buckets" {
   iam_members        = var.iam_members
   retention_policy = {
     is_locked        = false
-    retention_period = 365 * 7
+    retention_period = 220752000 
   }
   lifecycle_rules = [
     {
@@ -45,7 +45,7 @@ module "pci_gcs_buckets" {
   iam_members        = var.iam_members
   retention_policy = {
     is_locked        = false
-    retention_period = 365 * 7
+    retention_period = 220752000 
   }
   lifecycle_rules = [
     {
