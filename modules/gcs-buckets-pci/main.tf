@@ -34,7 +34,7 @@ module "gcs_pci_buckets" {
   ]
   retention_policy = {
     is_locked        = false
-    retention_period = 220752000
+    retention_period = 220752000 # This is in seconds
   }
   force_destroy            = var.force_destroy
   public_access_prevention = "enforced"             # Prevent public access is "enforced" by default
