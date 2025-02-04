@@ -31,8 +31,8 @@ module "gcs_non_pci_buckets" {
   lifecycle_rules          = var.lifecycle_rules
   retention_policy         = var.retention_policy
   force_destroy            = var.force_destroy
-  public_access_prevention = var.public_access_prevention # Prevent public access is "enforced" by default
-  soft_delete_policy       = var.soft_delete_policy       # Set to O (By default : 604800(7 days))
+  public_access_prevention = "enforced"             # Prevent public access is "enforced" by default
+  soft_delete_policy       = var.soft_delete_policy # Set to O (By default : 604800(7 days))
   encryption = {
     default_kms_key_name = length(var.kms_key_names) > 0 ? var.kms_key_names[each.key] : null
   }

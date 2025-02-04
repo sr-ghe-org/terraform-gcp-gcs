@@ -15,22 +15,30 @@ resource "google_kms_crypto_key_iam_binding" "encrypters" {
 
 # Module to create GCS buckets in multiple regions within the same project
 module "gcs_pci_buckets" {
-  for_each                 = toset(var.regions)
-  source                   = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
-  version                  = "9.0"
-  project_id               = var.project_id
-  name                     = "${var.bucket_name_prefix}-pci-${each.key}" # Bucket names are globally unique
-  location                 = each.value
-  bucket_policy_only       = true           # uniform_bucket_level_access is set to true
-  versioning               = var.versioning # By default set to true
-  labels                   = merge(var.labels, { bucket_type = "pci", region = each.key })
-  storage_class            = var.storage_class # By default storage Class of the new bucket set to "STANDARD"
-  autoclass                = var.autoclass     # By default, autoclass is set to false
-  lifecycle_rules          = var.lifecycle_rules
-  retention_policy         = var.retention_policy
+  for_each           = toset(var.regions)
+  source             = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
+  version            = "9.0"
+  project_id         = var.project_id
+  name               = "${var.bucket_name_prefix}-pci-${each.key}" # Bucket names are globally unique
+  location           = each.value
+  bucket_policy_only = true           # uniform_bucket_level_access is set to true
+  versioning         = var.versioning # By default set to true
+  labels             = merge(var.labels, { bucket_type = "pci", region = each.key })
+  storage_class      = var.storage_class # By default storage Class of the new bucket set to "STANDARD"
+  autoclass          = var.autoclass     # By default, autoclass is set to false
+  lifecycle_rules = [
+    {
+      action    = { type = "Delete" }
+      condition = { age = 365 * 7 }
+    }
+  ]
+  retention_policy = {
+    is_locked        = false
+    retention_period = 220752000
+  }
   force_destroy            = var.force_destroy
-  public_access_prevention = var.public_access_prevention # Prevent public access is "enforced" by default
-  soft_delete_policy       = var.soft_delete_policy       # Set to O (By default : 604800(7 days))
+  public_access_prevention = "enforced"             # Prevent public access is "enforced" by default
+  soft_delete_policy       = var.soft_delete_policy # Set to O (By default : 604800(7 days))
   encryption = {
     default_kms_key_name = length(var.kms_key_names) > 0 ? var.kms_key_names[each.key] : null
   }
