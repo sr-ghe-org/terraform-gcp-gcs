@@ -11,7 +11,6 @@ run "gcs_with_cmek" {
     project_id         = "pr-svpc"
     project_number     = "00000000000"
     regions            = ["northamerica-northeast1", "northamerica-northeast2"]
-    environment        = "prod"
     versioning         = true
     soft_delete_policy = {
       retention_duration_seconds = 900000
@@ -34,7 +33,6 @@ run "gcs_with_internal_encryption" {
     bucket_name_prefix = "gcs-pci-321-cmek"
     project_id         = "pr-hvpc-1056d88565a4"
     regions            = ["northamerica-northeast1", "northamerica-northeast2"]
-    environment        = "prod"
     versioning         = true
     soft_delete_policy = {
       retention_duration_seconds = 900000
