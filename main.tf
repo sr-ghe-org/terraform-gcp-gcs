@@ -33,7 +33,7 @@ module "non_pci_gcs_buckets" {
   retention_policy           = var.retention_policy
   lifecycle_rules            = var.lifecycle_rules
   force_destroy              = var.force_destroy
-  public_access_prevention   = var.public_access_prevention
+  public_access_prevention   = "enforced"
   soft_delete_policy         = var.soft_delete_policy
   kms_key_names              = var.kms_key_names
   internal_encryption_config = var.internal_encryption_config
