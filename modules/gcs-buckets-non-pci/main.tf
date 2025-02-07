@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 # Module to create GCS buckets in multiple regions within the same project
 
 resource "google_kms_crypto_key_iam_binding" "decrypters" {
@@ -39,8 +39,8 @@ module "gcs_non_pci_buckets" {
   name                     = "${var.bucket_name_prefix}-non-pci-${each.key}" # Bucket names are globally unique
   location                 = each.value
   bucket_policy_only       = true           # uniform_bucket_level_access is set to true
-  versioning               = var.versioning # By default set to true
-  labels                   = merge(var.labels, { bucket_type = "non-pci", region = each.key })
+  versioning               = var.versioning # By default set to false
+  labels                   = merge(var.labels, { bucket_type = "non-pci" })
   storage_class            = var.storage_class # By default storage Class of the new bucket set to "STANDARD"
   autoclass                = var.autoclass     # By default, autoclass is set to false
   lifecycle_rules          = var.lifecycle_rules
@@ -55,18 +55,6 @@ module "gcs_non_pci_buckets" {
   iam_members                = var.iam_members
   depends_on                 = [google_kms_crypto_key_iam_binding.decrypters, google_kms_crypto_key_iam_binding.encrypters]
 }
-
-# resource "google_storage_bucket_iam_binding" "bucket_iam_prod" {
-#   for_each = {
-#     for region in var.regions :
-#     "${var.bucket_name_prefix}-non-pci-${region}" => region
-#     if var.environment == "prod"
-#   }
-#   bucket     = each.key
-#   role       = "roles/storage.objectViewer"
-#   members    = [] # Replace with a dummy user in your organization
-#   depends_on = [module.gcs_non_pci_buckets]
-# }
 
 # Enable audit logging for the project
 resource "google_project_iam_audit_config" "project_audit_config" {

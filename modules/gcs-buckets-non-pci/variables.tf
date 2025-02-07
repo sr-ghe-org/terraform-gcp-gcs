@@ -39,15 +39,6 @@ variable "regions" {
   }
 }
 
-# variable "environment" {
-#   type        = string
-#   description = "Environment for the GCS bucket"
-#   validation {
-#     condition     = contains(["prod", "non-prod"], lower(var.environment))
-#     error_message = "Bucket type must be 'prod' or 'non-prod' (case-insensitive)."
-#   }
-# }
-
 variable "iam_members" {
   description = "The list of IAM members to grant permissions on the bucket."
   type = list(object({
@@ -60,7 +51,7 @@ variable "iam_members" {
 variable "versioning" {
   description = "While set to true, versioning is fully enabled for this bucket."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "labels" {
@@ -72,7 +63,7 @@ variable "labels" {
 variable "storage_class" {
   description = "The Storage Class of the new bucket."
   type        = string
-  default     = null
+  default     = "STANDARD"
 }
 
 variable "autoclass" {
@@ -99,7 +90,7 @@ variable "public_access_prevention" {
 variable "soft_delete_policy" {
   description = "Soft delete policies to apply. Format is the same as described in provider documentation https://www.terraform.io/docs/providers/google/r/storage_bucket.html#nested_soft_delete_policy"
   type = object({
-    retention_duration_seconds = optional(number)
+    retention_duration_seconds = optional(number, 604800)
   })
   default = {}
 }

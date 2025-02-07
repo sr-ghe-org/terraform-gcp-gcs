@@ -69,7 +69,7 @@ variable "regions" {
 variable "versioning" {
   description = "While set to true, versioning is fully enabled for this bucket."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "public_access_prevention" {
@@ -87,7 +87,7 @@ variable "labels" {
 variable "storage_class" {
   description = "The Storage Class of the new bucket."
   type        = string
-  default     = null
+  default     = "STANDARD"
 }
 
 variable "autoclass" {
@@ -108,7 +108,7 @@ variable "retention_policy" {
 variable "soft_delete_policy" {
   description = "Soft delete policies to apply. Format is the same as described in provider documentation https://www.terraform.io/docs/providers/google/r/storage_bucket.html#nested_soft_delete_policy"
   type = object({
-    retention_duration_seconds = optional(number)
+    retention_duration_seconds = optional(number, 604800)
   })
   default = {}
 }

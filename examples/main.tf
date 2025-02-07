@@ -7,8 +7,6 @@ module "non-pci-gcs-lifecycle" {
   bucket_name_prefix = "gcs-non-pci-lifecycle"
   project_id         = "pr-hvpc-1056d88565a4"
   regions            = ["northamerica-northeast1", "northamerica-northeast2"]
-  environment        = "prod"
-  versioning         = true
   storage_class      = "NEARLINE"
   project_number     = "828184145025"
   soft_delete_policy = {
@@ -61,7 +59,6 @@ module "non-pci-gcs-cmek" {
   project_id         = "pr-hvpc-1056d88565a4"
   project_number     = "828184145025"
   regions            = ["northamerica-northeast1", "northamerica-northeast2"]
-  environment        = "non-prod"
   versioning         = true
   bucket_type        = "non-pci"
   kms_key_names = {
@@ -85,8 +82,6 @@ module "pci-gcs" {
   bucket_name_prefix = "gcs-pci-321"
   project_id         = "pr-hvpc-1056d88565a4"
   regions            = ["northamerica-northeast1", "northamerica-northeast2"]
-  environment        = "prod"
-  versioning         = true
   bucket_type        = "pci"
   internal_encryption_config = {
     create_encryption_key = true
@@ -110,7 +105,6 @@ module "pci-gcs-cmek" {
   project_id         = "pr-hvpc-1056d88565a4"
   project_number     = "828184145025"
   regions            = ["northamerica-northeast1", "northamerica-northeast2"]
-  environment        = "prod"
   versioning         = true
   bucket_type        = "pci"
   kms_key_names = {
