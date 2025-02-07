@@ -54,6 +54,8 @@ module "pci_gcs_buckets" {
   storage_class              = var.storage_class
   autoclass                  = var.autoclass
   iam_members                = var.iam_members
+  retention_policy           = var.retention_policy
+  lifecycle_rules            = var.lifecycle_rules
   force_destroy              = var.force_destroy
   public_access_prevention   = "enforced"
   soft_delete_policy         = var.soft_delete_policy
