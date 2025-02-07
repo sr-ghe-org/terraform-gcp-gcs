@@ -55,6 +55,7 @@ This module simplifies the creation and management of GCS buckets, distinguishin
 
 **Encryption Configuration (Choose ONE of the following methods)**
   - You MUST provide either 'kms_key_names' OR 'internal_encryption_config' to enable CMEK.
+  - If 'kms_key_names' is passed - then also pass the value of 'project_number'
 
 ## Requirements
 
